@@ -23,7 +23,23 @@ describe("GET:200 - /api/topics", () => {
       .get("/api/topics")
       .expect(200)
       .then(({ body }) => {
-        expect(body).toEqual(topicData);
+        const expected = [
+          {
+            description: "The man, the Mitch, the legend",
+            slug: "mitch",
+          },
+          {
+            description: "Not dogs",
+            slug: "cats",
+          },
+          {
+            description: "what books are made of",
+            slug: "paper",
+          },
+        ];
+        expect(body).toEqual(expected);
+        expect(body.length).toBe(3);
+        expect(Array.isArray(expected)).toBe(true);
       });
   });
 });
