@@ -37,6 +37,8 @@ describe("200:GET - /api/articles/:article_id", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body).toEqual({ msg: "Not Found!" });
+        expect(body.hasOwnProperty("msg")).toBe(true);
+        expect(body.hasOwnProperty("eggyBread")).toBe(false);
       });
   });
   it("should respond with a 400 error when given an ID that is not a number", () => {
@@ -45,6 +47,8 @@ describe("200:GET - /api/articles/:article_id", () => {
       .expect(400)
       .then(({ body }) => {
         expect(body).toEqual({ msg: "Bad Request!" });
+        expect(body.hasOwnProperty("msg")).toBe(true);
+        expect(body.hasOwnProperty("eggyBread")).toBe(false);
       });
   });
 });
