@@ -22,13 +22,6 @@ describe("200:GET - /api/articles/:article_id", () => {
           votes: 100,
         };
         expect(body).toEqual(expected);
-        expect(body.hasOwnProperty("title")).toBe(true);
-        expect(body.hasOwnProperty("topic")).toBe(true);
-        expect(body.hasOwnProperty("author")).toBe(true);
-        expect(body.hasOwnProperty("body")).toBe(true);
-        expect(body.hasOwnProperty("created_at")).toBe(true);
-        expect(body.hasOwnProperty("votes")).toBe(true);
-        expect(body.hasOwnProperty("eggyBread")).toBe(false);
       });
   });
   it("should respond with a 404 error when given an ID that does not exist", () => {
@@ -37,8 +30,6 @@ describe("200:GET - /api/articles/:article_id", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body).toEqual({ msg: "Not Found!" });
-        expect(body.hasOwnProperty("msg")).toBe(true);
-        expect(body.hasOwnProperty("eggyBread")).toBe(false);
       });
   });
   it("should respond with a 400 error when given an ID that is not a number", () => {
@@ -47,8 +38,6 @@ describe("200:GET - /api/articles/:article_id", () => {
       .expect(400)
       .then(({ body }) => {
         expect(body).toEqual({ msg: "Bad Request!" });
-        expect(body.hasOwnProperty("msg")).toBe(true);
-        expect(body.hasOwnProperty("eggyBread")).toBe(false);
       });
   });
 });
