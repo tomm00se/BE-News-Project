@@ -1,9 +1,3 @@
-const {
-  articleData,
-  commentData,
-  topicData,
-  userData,
-} = require("../db/data/test-data/index.js");
 const { fetchDataFromTopics } = require("../model/topics-model.js");
 
 exports.getTopicsData = async (req, res, next) => {
