@@ -27,10 +27,10 @@ exports.fetchArticleFromTable = async (id) => {
   const article = articleRes.rows[0];
 
   const comments = await db.query(
-    "SELECT * FROM comments WHERE article_id = $1;",
+    "SELECT COUNT(*) FROM comments WHERE article_id = $1;",
     [id]
   );
-  article.comment_count = comments.rows.length;
+  article.comment_count = parseInt(comments.rows[0].count);
 
   return article;
 };
