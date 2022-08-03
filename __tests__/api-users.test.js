@@ -47,7 +47,8 @@ describe("GET:200 - /api/users", () => {
   });
 });
 
-describe("404 - /api/eggyBread", () => {
+
+describe("404 - /api/eggyBread - end point does not exist", () => {
   it("should respond with a 404 error from error middleware", async () => {
     const { body } = await request(app).get("/api/eggyBread").expect(404);
   });

@@ -18,12 +18,19 @@ exports.validateRes = (result) => {
 exports.fetchArticleFromTable = async (id) => {
   exports.validateID(id);
 
-  const article = await db.query(
+  const articleRes = await db.query(
     "SELECT * FROM articles WHERE article_id = $1;",
     [id]
   );
 
-  exports.validateRes(article);
+  exports.validateRes(articleRes);
+  const article = articleRes.rows[0];
 
-  return article.rows[0];
+  const comments = await db.query(
+    "SELECT COUNT(*) FROM comments WHERE article_id = $1;",
+    [id]
+  );
+  article.comment_count = parseInt(comments.rows[0].count);
+
+  return article;
 };
