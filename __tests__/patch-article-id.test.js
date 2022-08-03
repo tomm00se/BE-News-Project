@@ -16,6 +16,7 @@ describe("PATCH /api/articles/:article_id", () => {
     author: "butter_bridge",
     body: "I find this existence challenging",
     created_at: "2020-07-09T20:11:00.000Z",
+    comment_count: 11,
   };
   it("status:201, should add the value of inc_votes to votes", async () => {
     const { body } = await request(app)
