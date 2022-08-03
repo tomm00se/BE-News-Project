@@ -5,6 +5,15 @@ const seed = require("../db/seeds/seed.js");
 beforeEach(() => seed(testData));
 
 describe("200:GET - /api/articles/:article_id", () => {
+  const expectedArticle = {
+    article_id: 1,
+    title: "Living in the shadow of a great man",
+    topic: "mitch",
+    author: "butter_bridge",
+    body: "I find this existence challenging",
+    created_at: "2020-07-09T20:11:00.000Z",
+    votes: 100,
+  };
   it("should respond with a 200 server status if ID is a valid endpoint", () => {
     return request(app).get("/api/articles/1").expect(200);
   });
@@ -13,14 +22,7 @@ describe("200:GET - /api/articles/:article_id", () => {
       .get("/api/articles/1")
       .expect(200)
       .then(({ body }) => {
-        const expected = {
-          title: "Living in the shadow of a great man",
-          topic: "mitch",
-          author: "butter_bridge",
-          body: "I find this existence challenging",
-          created_at: "2020-07-09T20:11:00.000Z",
-          votes: 100,
-        };
+        const expected = { ...expectedArticle };
         expect(body).toEqual(expected);
       });
   });
