@@ -19,7 +19,7 @@ exports.fetchArticleFromTable = async (id) => {
   exports.validateID(id);
 
   const article = await db.query(
-    "SELECT author, title, body, topic, created_at, votes FROM articles WHERE article_id = $1;",
+    "SELECT * FROM articles WHERE article_id = $1;",
     [id]
   );
 
