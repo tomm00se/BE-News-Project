@@ -9,7 +9,7 @@ afterAll(() => {
 });
 
 describe("201: POST - /api/articles/:article_id/comments", () => {
-  const posting = {
+  const postData = {
     username: "butter_bridge",
     body: "I find this existance challenging",
   };
@@ -23,9 +23,8 @@ describe("201: POST - /api/articles/:article_id/comments", () => {
   it("status:201 - should send the request body an object with username and body", async () => {
     const { body } = await request(app)
       .post("/api/articles/1/comments")
-      .send(posting)
+      .send(postData)
       .expect(201);
-    console.log(body);
 
     const currentTime = new Date();
     const createdAt = new Date(body.created_at);

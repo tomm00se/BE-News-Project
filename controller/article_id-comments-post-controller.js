@@ -1,13 +1,11 @@
-const {
-  postingArticleData,
-} = require("../model/article_id-comments-post-model");
+const { createNewComment } = require("../model/article_id-comments-post-model");
 
-exports.postArticleData = async (req, res, next) => {
+exports.postNewComment = async (req, res, next) => {
   try {
     const id = req.params.article_id;
-    const posting = req.body;
-    const postedArticleData = await postingArticleData(id, posting);
-    res.status(201).send(postedArticleData);
+    const postData = req.body;
+    const createdComment = await createNewComment(id, postData);
+    res.status(201).send(createdComment);
   } catch (err) {
     next(err);
   }
