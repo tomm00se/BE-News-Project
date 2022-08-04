@@ -17,3 +17,20 @@ exports.fetchCommentDataById = async (id) => {
   );
   return results.rows;
 };
+
+exports.deleteComment = async (id) => {
+  validateID(id);
+
+  const result = await db.query("DELETE FROM comments WHERE comment_id = $1;", [
+    id,
+  ]);
+
+  if (!result.rowCount) {
+    throw {
+      status: 404,
+      msg: "Not Found!",
+    };
+  }
+
+  return result;
+};
