@@ -1,5 +1,6 @@
 const express = require("express");
 const { getAllArticles } = require("./controller/api-articles-controller");
+const { getCommentById } = require("./controller/article-comment-controller");
 const { getArticleById } = require("./controller/article_id-controller");
 const { patchArticle } = require("./controller/patch-article-id");
 const { getTopicsData } = require("./controller/topics-controller");
@@ -21,6 +22,8 @@ app.patch("/api/articles/:article_id", patchArticle);
 app.get("/api/users", getAllUsers);
 
 app.get("/api/articles", getAllArticles);
+
+app.get("/api/articles/:article_id/comments", getCommentById);
 
 app.use(handleCustomError);
 app.use(serverErrorHandler);
