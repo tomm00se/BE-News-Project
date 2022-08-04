@@ -3,6 +3,7 @@ const { getAllArticles } = require("./controller/api-articles-controller");
 const { getCommentById } = require("./controller/article-comment-controller");
 const {
   postArticleData,
+  postNewComment,
 } = require("./controller/article_id-comments-post-controller");
 const { getArticleById } = require("./controller/article_id-controller");
 const { patchArticle } = require("./controller/patch-article-id");
@@ -28,7 +29,7 @@ app.get("/api/articles", getAllArticles);
 
 app.get("/api/articles/:article_id/comments", getCommentById);
 
-app.post("/api/articles/:article_id/comments", postArticleData);
+app.post("/api/articles/:article_id/comments", postNewComment);
 
 app.use(handleCustomError);
 app.use(serverErrorHandler);
