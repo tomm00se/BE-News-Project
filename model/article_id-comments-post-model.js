@@ -11,6 +11,13 @@ exports.postingArticleData = async (id, posting) => {
 
   validateRes(validateIdQuery);
 
+  if (typeof posting.username != "string") {
+    throw {
+      status: 400,
+      msg: "Bad Request!",
+    };
+  }
+
   const userResult = await db.query(
     "SELECT users.username FROM users WHERE users.username = $1;",
     [posting.username]
@@ -18,8 +25,8 @@ exports.postingArticleData = async (id, posting) => {
 
   if (!userResult.rows.length) {
     throw {
-      status: 400,
-      msg: "Bad Request!",
+      status: 404,
+      msg: "Not Found!",
     };
   }
 
