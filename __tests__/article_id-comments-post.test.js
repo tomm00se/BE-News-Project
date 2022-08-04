@@ -53,4 +53,23 @@ describe("201: POST - /api/articles/:article_id/comments", () => {
     const expected = { msg: "Bad Request!" };
     expect(body).toEqual(expected);
   });
+  it("status:400, not a valid ID", async () => {
+    const { body } = await request(app)
+      .post("/api/articles/eatingBananas/comments")
+      .expect(400);
+    expect(body).toEqual({ msg: "Bad Request!" });
+  });
+  it("status:404, article not found", async () => {
+    const { body } = await request(app)
+      .post("/api/articles/99999/comments")
+      .expect(404);
+    expect(body).toEqual({ msg: "Not Found!" });
+  });
+  it("status:404, user not found", async () => {
+    const { body } = await request(app)
+      .post("/api/articles/1/comments")
+      .send({ username: "Bilbo", body: "Baggins" })
+      .expect(404);
+    expect(body).toEqual({ msg: "Not Found!" });
+  });
 });
