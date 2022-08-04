@@ -1,7 +1,7 @@
 const db = require("../db/connection");
 const { validateRes, validateID } = require("./article_id-model");
 
-exports.postingArticleData = async (id, posting) => {
+exports.createNewComment = async (id, postData) => {
   validateID(id);
 
   const validateIdQuery = await db.query(
@@ -11,7 +11,7 @@ exports.postingArticleData = async (id, posting) => {
 
   validateRes(validateIdQuery);
 
-  if (typeof posting.username != "string") {
+  if (typeof postData.username != "string") {
     throw {
       status: 400,
       msg: "Bad Request!",
@@ -20,7 +20,7 @@ exports.postingArticleData = async (id, posting) => {
 
   const userResult = await db.query(
     "SELECT users.username FROM users WHERE users.username = $1;",
-    [posting.username]
+    [postData.username]
   );
 
   if (!userResult.rows.length) {
@@ -32,7 +32,7 @@ exports.postingArticleData = async (id, posting) => {
 
   const insertQuery = await db.query(
     "INSERT INTO comments (article_id, author, body) VALUES ($1,$2,$3) RETURNING *;",
-    [id, posting.username, posting.body]
+    [id, postData.username, postData.body]
   );
   return insertQuery.rows[0];
 };
