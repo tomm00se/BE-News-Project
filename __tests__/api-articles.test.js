@@ -260,7 +260,6 @@ describe("GET:200 - /api/articles/?QUERY=QUERY", () => {
     const { body } = await request(app)
       .get("/api/articles?sort_by=article_id&order=asc")
       .expect(200);
-    console.log(body);
     expect(body).toEqual(expectedById);
   });
   it("should respond with article data filtered by the cats topic, orded by ID", async () => {
@@ -269,10 +268,47 @@ describe("GET:200 - /api/articles/?QUERY=QUERY", () => {
       .expect(200);
     expect(body).toEqual(expectedByTopic);
   });
+  it("should respond with article data sorted by created_at, ordered asc", async () => {
+    const { body } = await request(app)
+      .get("/api/articles?order=asc")
+      .expect(200);
+    const reversedExpected = [...expectedByDate].reverse();
+    expect(body).toEqual(reversedExpected);
+  });
+});
+
+describe("400 - /api/articles/?QUERY=QUERY", () => {
+  it("should respond 400 when given a query that is not sort_by, query or topic", async () => {
+    const { body } = await request(app)
+      .get("/api/articles?eggyBread=yesPlease")
+      .expect(400);
+    expect(body).toEqual({ msg: "Bad Request!" });
+  });
+
+  it("should respond 400 when given a query that has an invalid sort_by", async () => {
+    const { body } = await request(app)
+      .get("/api/articles?sort_by=eggyBread")
+      .expect(400);
+    expect(body).toEqual({ msg: "Bad Request!" });
+  });
+
+  it("should respond 400 when given a query that has an invalid order", async () => {
+    const { body } = await request(app)
+      .get("/api/articles?order=eggyBread")
+      .expect(400);
+    expect(body).toEqual({ msg: "Bad Request!" });
+  });
 });
 
 describe("404 - /api/yetAnotherEggedBread - this is an invalid endpoint", () => {
   it("should respond with a 404 error from error middleware", async () => {
     const { body } = await request(app).get("/api/eggyBread").expect(404);
+  });
+
+  it("should respond 404 when given a query that has an invalid topic", async () => {
+    const { body } = await request(app)
+      .get("/api/articles?topic=eggyBread")
+      .expect(404);
+    expect(body).toEqual({ msg: "Not Found!" });
   });
 });
