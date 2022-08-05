@@ -5,7 +5,7 @@ exports.getAllEndpoints = async (req, res, next) => {
     res
       .status(200)
       .header("Content-Type", "application/json")
-      .send(JSON.stringify(endpoints));
+      .send({ endpoints });
   } catch (err) {
     next(err);
   }
